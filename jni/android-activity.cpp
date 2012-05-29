@@ -2,7 +2,6 @@
 #include <jni.h>
 #include <android/log.h>
 #include <irrlicht.h>
-#include "engine/engine.h"
 #include <Box2D/Box2D.h>
 
 #include "Fighter.h"
@@ -22,10 +21,11 @@ void nativeDrawIteration();
 void nativeOnInitScene();
 
 // global variables
-int  gWindowWidth  = 320;
-int  gWindowHeight = 480;
 int  gAppAlive   = 1;
 stringc gSdCardPath = "/sdcard/";
+/*
+int  gWindowWidth  = 320;
+int  gWindowHeight = 480;
 
 
 IrrlichtDevice *device = NULL;
@@ -34,6 +34,19 @@ IVideoDriver* driver = NULL;
 
 RenderWindow &window = RenderWindow::getInstance();
 Map *mapa;
+*/
+
+//Fighter
+Receiver* receiver_fighter;
+Input*inputa;
+Input*inputb;
+Grafico*grafico;
+Sonido*sonido;
+
+Menu* menu;
+Fighter*fighter;
+
+bool fighter_activo;
 
 /* For JNI: C++ compiler need this */
 extern "C" {
@@ -79,8 +92,6 @@ void Java_com_carloscastro_engine_Game_nativeInitGL( JNIEnv*  env )
     if (!driver)
         __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "No driver");
         */
-	window.startWindow();
-	mapa = new Map();
 }
 
 void Java_com_carloscastro_engine_Game_nativeResize( JNIEnv*  env, jobject  thiz, jint w, jint h )
@@ -98,6 +109,57 @@ void Java_com_carloscastro_engine_Game_nativeResize( JNIEnv*  env, jobject  thiz
 void Java_com_carloscastro_engine_Game_nativeSendEvent( JNIEnv*  env, jobject defaultObj, jobject event)
 {
 	__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "SendEvent");
+
+    jclass classEvent = env->GetObjectClass(event);
+    jfieldID fieldAction = env->GetFieldID(classEvent, "mAction", "I");
+    jfieldID fieldX = env->GetFieldID(classEvent, "mX", "F");
+    jfieldID fieldY = env->GetFieldID(classEvent, "mY", "F");
+    int action = env->GetIntField(event, fieldAction);
+    // convert Android coord to OpenGL coords
+    float x = env->GetFloatField(event, fieldX);
+    float y = env->GetFloatField(event, fieldY);
+
+///*
+/**/
+if(action==0)
+{
+  if(y>100)
+  {
+    if(x<100)
+    {
+      receiver_fighter->up=true;
+    }
+
+    if(x>100)
+    {
+      receiver_fighter->down=true;
+    }
+  }else
+  {
+    receiver_fighter->a=true;
+  }
+}
+
+//menu->logicaCharSelect();
+//menu->logicaAcciones();
+
+/*
+if(bool_down==true)
+{
+  menu->receiver->down=true;
+}else
+{
+  menu->receiver->down=false;
+}
+
+if(bool_up==true)
+{
+  menu->receiver->up=true;
+}else
+{
+  menu->receiver->up=false;
+}
+
     /*jclass classEvent = env->GetObjectClass(event);
     jfieldID fieldAction = env->GetFieldID(classEvent, "mAction", "I");
     jfieldID fieldX = env->GetFieldID(classEvent, "mX", "F");
@@ -155,36 +217,112 @@ void Java_com_carloscastro_engine_Game_nativeEnvJ2C(JNIEnv*  env, jobject defaul
 void Java_com_carloscastro_engine_Game_nativeDrawIteration( JNIEnv*  env, jobject defaultObj, jobject status )
 {
 
+        //jclass classStatus = env->GetObjectClass(status);
+        //jfieldID fieldStatus = env->GetFieldID(classStatus, "mQuit", "Z");
+        //bool env->SetBooleanField(status, fieldStatus, true);
+/*
+jfieldID fid = env->GetFieldID(env->GetObjectClass(status), "down", "Z");
+jboolean bool_down = env->GetBooleanField(status, fid);
 
+jfieldID fid_up = env->GetFieldID(env->GetObjectClass(status), "up", "Z");
+jboolean bool_up = env->GetBooleanField(status, fid_up);
+*/
+if(menu==NULL)
+  menu=new Menu(grafico,receiver_fighter,sonido,(char*)"/sdcard/Fighter/menu/main_menu.xml",NULL);
+gAppAlive=1;
+
+
+//    __android_log_print(ANDROID_LOG_INFO, "UNO", "fps=%d", 22);
+//	    menu->logicaMenu();
+//    __android_log_print(ANDROID_LOG_INFO, "DOS", "fps=%d", 22);
+
+///*
+	if(!fighter_activo)
+	{
+	    menu->logicaMenu();
+
+	    if(menu->bool_break)
+	    {
+		menu->bool_break=false;
+		if(menu->padre==NULL)
+		{
+		    gAppAlive=0;
+		    //break;!!!!
+		}
+		else
+		{
+		    menu=menu->padre;
+		    menu->tecla_arriba=false;
+		}
+	    }
+	    if(menu->bool_menu_hijo)
+	    {
+		menu->bool_menu_hijo=false;
+		menu=menu->hijo;
+		menu->tecla_arriba=false;
+	    }
+	    if(menu->bool_fighter)
+	    {
+		fighter=menu->fighter;
+		fighter_activo=true;
+	    }
+	}
+	else
+	{
+	    fighter->logicaFighter();
+	    if(fighter->bool_beak)
+	    {
+		menu=fighter->padre;
+		fighter_activo=false;
+	    }
+	}
+
+/*
     gAppAlive = window.isOpened();
 
     window.clear();
     mapa->update();
 	mapa->render();
 	window.display();
-
-
-
+/**/
     if (gAppAlive==0) {
             jclass classStatus = env->GetObjectClass(status);
             jfieldID fieldStatus = env->GetFieldID(classStatus, "mQuit", "Z");
             env->SetBooleanField(status, fieldStatus, true);
     }
-    __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "fps=%d", window.getFPS());
+    //__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "fps=%d", 22);
+    //__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "fps=%d", window.getFPS());
 }
 
 void Java_com_carloscastro_engine_Game_nativeInitScene( JNIEnv*  env )
 {
-	gAppAlive=1;
+    //Fighter
+    receiver_fighter=new Receiver();
+    inputa=new Input();
+    inputb=new Input();
+    inputa->cargarDesdeXML(1,receiver_fighter);
+    inputb->cargarDesdeXML(2,receiver_fighter);
+    grafico=new Grafico(receiver_fighter);
+    sonido = new Sonido();
+    //menu=new Menu(grafico,receiver_fighter,sonido,(char*)"/sdcard/Fighter/menu/main_menu.xml",NULL);
+    menu=NULL;
+    fighter=NULL;
+    sonido->reproducirSonido(stringw("Menu.music"));
+
+    fighter_activo=false;
+
+    gAppAlive=1;
+/*
 	//mapa->loadMap("/sdcard/Irrlicht/resources/test.xml");
 	for(int i=0;i<30;i++)
 	{
 	  TextureItem * item = new TextureItem();
-	  item->setTextureFileName("/sdcard/Irrlicht/resources/irrlichtlogo2.png");
+	  item->setTextureFileName("/sdcard/Fighter/chars/Nelson/portrait.png");
 	  irr::core::vector2df newpos((i%7)*128.0f,(i/7)*128);
 	  item->setPosition(newpos);
 	  mapa->addEntity(item);
 	}
+*/
 	__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "OnInitScene");
 }
 

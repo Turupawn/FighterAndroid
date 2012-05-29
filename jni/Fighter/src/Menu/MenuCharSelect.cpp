@@ -34,8 +34,8 @@ MenuCharSelect::MenuCharSelect(Grafico*grafico,int x, int y, int width, int heig
 
     for(int i=0;i<(int)names.size();i++)
     {
-        portraits.push_back(grafico->getTexture(stringw("chars/")+names[i]+stringw("/portrait.png")));
-        previews.push_back(grafico->getTexture(stringw("chars/")+names[i]+stringw("/preview.png")));
+        portraits.push_back(grafico->getTexture(stringw("/sdcard/Fighter/chars/")+names[i]+stringw("/portrait.png")));
+        previews.push_back(grafico->getTexture(stringw("/sdcard/Fighter/chars/")+names[i]+stringw("/preview.png")));
     }
     this->names=names;
 
@@ -43,11 +43,11 @@ MenuCharSelect::MenuCharSelect(Grafico*grafico,int x, int y, int width, int heig
     select_p2_y=0;
     select_p2_x=size_x-1;
 
-    selected_char_p1=grafico->getTexture("menu/selected_char_p1.png");
-    selected_char_p2=grafico->getTexture("menu/selected_char_p2.png");
-    locked_char_p1=grafico->getTexture("menu/locked_char_p1.png");
-    locked_char_p2=grafico->getTexture("menu/locked_char_p2.png");
-    no_portrait=grafico->getTexture("menu/no_portrait.png");
+    selected_char_p1=grafico->getTexture("/sdcard/Fighter/menu/selected_char_p1.png");
+    selected_char_p2=grafico->getTexture("/sdcard/Fighter/menu/selected_char_p2.png");
+    locked_char_p1=grafico->getTexture("/sdcard/Fighter/menu/locked_char_p1.png");
+    locked_char_p2=grafico->getTexture("/sdcard/Fighter/menu/locked_char_p2.png");
+    //no_portrait=grafico->getTexture("/sdcard/Fighter/menu/no_portrait.png");
 }
 
 void MenuCharSelect::lockPA(int num_paleta)
@@ -163,7 +163,7 @@ int MenuCharSelect::getTipo()
 
 void MenuCharSelect::dibujar()
 {
-
+/**/
     int cont=0;
 
     for(int j=0;j<size_y;j++)
@@ -172,7 +172,7 @@ void MenuCharSelect::dibujar()
             //dibujar portraits
             if(cont<(int)portraits.size())
             {
-                //dibujar preview pa
+		//dibujar preview pa
                 if(select_p1_x+select_p1_y*size_x==cont)
                 {
                     irr::video::ITexture *imagen=previews[cont];
@@ -312,6 +312,7 @@ void MenuCharSelect::dibujar()
             }
             cont++;
         }
+/**/
 }
 
 void MenuCharSelect::dibujar(int alineacion_x,int alineacion_y)

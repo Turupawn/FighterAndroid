@@ -5,16 +5,16 @@ Fighter::Fighter(Sonido* sonido,Grafico* grafico,Receiver* receiver,vector<Perso
     duracion_ko=30;
     tiempo_actual_ko=0;
     pos_imagen_ko=0;
-    ko.push_back(Imagen(grafico->getTexture("misc/ko/1.png"),1,0,0));
-    ko.push_back(Imagen(grafico->getTexture("misc/ko/2.png"),1,0,0));
-    ko.push_back(Imagen(grafico->getTexture("misc/ko/3.png"),1,0,0));
+    ko.push_back(Imagen(grafico->getTexture("/sdcard/Fighter/misc/ko/1.png"),1,0,0));
+    ko.push_back(Imagen(grafico->getTexture("/sdcard/Fighter/misc/ko/2.png"),1,0,0));
+    ko.push_back(Imagen(grafico->getTexture("/sdcard/Fighter/misc/ko/3.png"),1,0,0));
 
     duracion_intro=30;
     tiempo_actual_intro=0;
     pos_imagen_intro=0;
-    match_intro.push_back(Imagen(grafico->getTexture("misc/match_intro/1.png"),1,0,0));
-    match_intro.push_back(Imagen(grafico->getTexture("misc/match_intro/2.png"),1,0,0));
-    match_intro.push_back(Imagen(grafico->getTexture("misc/match_intro/3.png"),1,0,0));
+    match_intro.push_back(Imagen(grafico->getTexture("/sdcard/Fighter/misc/match_intro/1.png"),1,0,0));
+    match_intro.push_back(Imagen(grafico->getTexture("/sdcard/Fighter/misc/match_intro/2.png"),1,0,0));
+    match_intro.push_back(Imagen(grafico->getTexture("/sdcard/Fighter/misc/match_intro/3.png"),1,0,0));
 
     for(int i=0; i<(int)pa.size(); i++)
         pa[i]->stage_piso=stage->pos_piso;
@@ -60,6 +60,10 @@ Fighter::Fighter(Sonido* sonido,Grafico* grafico,Receiver* receiver,vector<Perso
 
     sonido->reproducirSonido("Stage.music");
     anterior=grafico->device->getTimer()->getTime();
+
+    float en_medio=stage->size/2-grafico->ventana_x/4;
+    getPaActual()->setEntero("position_x",en_medio-50);
+    getPbActual()->setEntero("position_x",en_medio+50);
 
     bool_beak=false;
     bool_pausa=false;
@@ -730,7 +734,7 @@ char *strrev(char *str)
 
 void Fighter::dibujarBarra()
 {
-    irr::video::ITexture* texture_bar=grafico->getTexture("misc/bar.png");
+    irr::video::ITexture* texture_bar=grafico->getTexture("/sdcard/Fighter/misc/bar.png");
     grafico->draw2DImage
     (   texture_bar,
         irr::core::dimension2d<irr::f32> (texture_bar->getOriginalSize ().Width,texture_bar->getOriginalSize ().Height),
@@ -912,5 +916,5 @@ void Fighter::escribirInputsXML()
 {
     TiXmlDocument *doc=new TiXmlDocument();
     inputb->getXML(inputa->getXML(doc));
-    doc->SaveFile( "misc/inputs.xml" );
+    doc->SaveFile( "/sdcard/Fighter/misc/inputs.xml" );
 }

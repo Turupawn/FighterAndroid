@@ -7,7 +7,7 @@
 using namespace std;
 
 #include <irrlicht.h>
-#include "tinyxml.h"
+#include "TinyXml/tinyxml.h"
 
 using namespace irr;
 using namespace core;
@@ -38,6 +38,9 @@ private:
     const SEvent::SJoystickEvent & GetJoystickState(void) const;
     int joystick;
 public:
+    //port android
+    bool up,down,left,right,a,b;
+
     Receiver();
     bool IsKeyDownn(char keycode);
     bool IsKeyPressed(char keycode);

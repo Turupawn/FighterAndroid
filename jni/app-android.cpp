@@ -13,7 +13,6 @@
 #include <irrlicht.h>
 #include <irr/os.h>
 //#include "engine/engine.h"
-#include "engine/engine.h"
 
 
 using namespace irr;
@@ -35,9 +34,10 @@ using namespace gui;
 
 
 
-
+/*
 extern IrrlichtDevice *device;
 extern IVideoDriver* driver;
+*/
 extern stringc gSdCardPath;
 
 
@@ -64,6 +64,7 @@ static long _getTime(void)
 
 void initQuake()
 {
+/*
     //appInit();
     
     smgr = device->getSceneManager();
@@ -113,11 +114,13 @@ void initQuake()
 
     // And tell the device to use our custom event receiver.
     device->setEventReceiver(receiver);                        
-    
+
+/**/
 }
 
 void initSydney()
 {
+/*
 	__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "initSydney");
     smgr = device->getSceneManager();
     guienv = device->getGUIEnvironment();
@@ -152,11 +155,15 @@ void initSydney()
 
     // And tell the device to use our custom event receiver.
     device->setEventReceiver(receiver);
+
+/**/
 }
 
 
 void initIrr() {
-    
+
+
+/*    
     Printer::Logger = new CAndroidLogger();
     
     smgr = device->getSceneManager();
@@ -204,6 +211,8 @@ void initIrr() {
 
     camera = smgr->addCameraSceneNodeFPS();
     camera->setPosition(core::vector3df(-50,50,-150));
+
+/**/
     
 }
 
@@ -211,6 +220,7 @@ static int counter = 0;
 /* Call to render the next GL frame */
 void nativeDrawIterationSydney()
 {	
+/*
     device->run();
     if (counter==0) {
        // initSydney();
@@ -229,12 +239,13 @@ void nativeDrawIterationSydney()
 
 	//int fps = driver->getFPS();
     //__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "fps=%d", fps);
-
+/**/
 }
 
 /* Call to render the next GL frame */
 void nativeDrawIterationQuake()
-{	
+{
+/*	
     device->run();
     if (counter==0) {
        // initQuake();
@@ -257,11 +268,12 @@ void nativeDrawIterationQuake()
 	int fps = driver->getFPS();
 		unsigned int tris = driver->getPrimitiveCountDrawn();
 	    __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "fps=%d tris=%u", fps,tris);
-
+/**/
 }
 
 void nativeDrawIterationIrr()
-{	
+{
+/*	
     device->run();	
     if (counter==0) {
     //    initIrr();
@@ -281,12 +293,13 @@ void nativeDrawIterationIrr()
 	int fps = driver->getFPS();
 	unsigned int tris = driver->getPrimitiveCountDrawn();
     __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "fps=%d tris=%u", fps,tris);
-
+/**/
 } 
 
 
 void initFX ()
 {
+/*
 	 __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "initFX");
 	smgr = device->getSceneManager();
 	guienv = device->getGUIEnvironment();
@@ -314,12 +327,13 @@ void initFX ()
 		camera->setPosition(core::vector3df(0.f, 20.f, 0.f));
 
 
-
+/**/
 
 }
 
 void nativeDrawIterationFX()
 {
+/*
 	    device->run();
 
 	    camera->setRotation(core::vector3df(0, counter, 0));
@@ -335,7 +349,7 @@ void nativeDrawIterationFX()
 		int fps = driver->getFPS();
 		unsigned int tris = driver->getPrimitiveCountDrawn();
 	    __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "fps=%d tris=%u", fps,tris);
-
+/**/
 }
 
 void init2D()

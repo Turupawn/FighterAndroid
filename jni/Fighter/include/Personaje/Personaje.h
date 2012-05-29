@@ -7,6 +7,7 @@
 #include "Sonido/Sonido.h"
 #include "Personaje/Animacion.h"
 #include "Personaje/Paleta.h"
+#include <android/log.h>
 
 class Personaje
 {

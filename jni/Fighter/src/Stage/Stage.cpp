@@ -107,7 +107,7 @@ void Stage::cargarDesdeXML(char* path)
     strcpy(archivo,"stages/");
     strcat(archivo,path);
     strcat(archivo,"/main.xml");
-    TiXmlDocument doc_t( archivo );
+    TiXmlDocument doc_t( "/sdcard/Fighter/stages/Stage4/main.xml" );
     doc_t.LoadFile();
     TiXmlDocument *doc;
     doc=&doc_t;
@@ -126,8 +126,8 @@ void Stage::cargarDesdeXML(char* path)
 
     TiXmlNode *nodo_bg=doc->FirstChild("Background");
     char *bg=new char[255];
-    strcpy(bg,"stages/");
-    strcat(bg,path);
+    strcpy(bg,"/sdcard/Fighter/stages/");
+    strcat(bg,"Stage4");
     strcat(bg,"/images/");
     strcat(bg,nodo_bg->ToElement()->Attribute("image"));
     int size_x=atoi(nodo_bg->ToElement()->Attribute("size_x"));
@@ -140,8 +140,8 @@ void Stage::cargarDesdeXML(char* path)
             layer=layer->NextSibling("layer"))
     {
         char *image=new char[255];
-        strcpy(image,"stages/");
-        strcat(image,path);
+        strcpy(image,"/sdcard/Fighter/stages/");
+        strcat(image,"Stage4");
         strcat(image,"/images/");
         strcat(image,layer->ToElement()->Attribute("image"));
         int size_x=atoi(layer->ToElement()->Attribute("size_x"));
@@ -155,8 +155,8 @@ void Stage::cargarDesdeXML(char* path)
             layer=layer->NextSibling("layer"))
     {
         char *image=new char[255];
-        strcpy(image,"stages/");
-        strcat(image,path);
+        strcpy(image,"/sdcard/Fighter/stages/");
+        strcat(image,"Stage4");
         strcat(image,"/images/");
         strcat(image,layer->ToElement()->Attribute("image"));
         int size_x=atoi(layer->ToElement()->Attribute("size_x"));

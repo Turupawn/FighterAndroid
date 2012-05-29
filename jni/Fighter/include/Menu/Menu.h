@@ -10,6 +10,7 @@
 #include "Sonido/Sonido.h"
 #include "Fighter.h"
 //using namespace irrklang;
+#include <android/log.h>
 
 class Menu
 {
@@ -17,7 +18,6 @@ private:
     //Engines
     Sonido* sonido;
     Grafico* grafico;
-    Receiver* receiver;
     vector<Elemento*> elementos;
     MenuContenedor*contenedor_actual;
     TiXmlDocument abrirXml(char* archivo);
@@ -35,6 +35,8 @@ private:
     bool tecla_arriba_p1;
     bool tecla_arriba_p2;
 public:
+    bool bool_vs_screen;
+    Receiver* receiver;
     Input *inputa,*inputb;
     vector<Personaje*>pa;
     vector<Personaje*>pb;

@@ -459,6 +459,7 @@ void Personaje::aplicarModificador(ModificadorEntero* me,bool flip)
             setEntero(me->variable,temp_entero);
         }
     }
+
 }
 
 void Personaje::aplicarModificador(ModificadorString* ms)
@@ -675,27 +676,47 @@ void Personaje::cargarDesdeXML(int px,int py,Input* input,char* nombre)
     setEntero("position_x",px);
     setEntero("position_y",py);
 
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii1");
+
     char* path_palettes=new char[255];
-    strcpy(path_palettes,"chars/");
+    strcpy(path_palettes,"/sdcard/Fighter/chars/");
     strcat(path_palettes,char_name_ptr);
     strcat(path_palettes,"/palettes.xml\0");
-    paleta.cargarXML(path_palettes,num_paleta);
+    paleta.cargarXML("/sdcard/Fighter/chars/Evilken/palettes.xml",num_paleta);
+
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii2");
 
     cargarMain();
 
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii3");
+
     cargarVars();
+
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii4");
 
     cargarInputs();
 
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii5");
+
     cargarTriggers();
+
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii6");
 
     cargarSprites();
 
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii7");
+
     cargarHitboxes();
+
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii8");
 
     cargarSfx();
 
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii9");
+
     cargarAnimations();
+
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii10");
 }
 
 void Personaje::logicaBarras()
@@ -714,11 +735,11 @@ void Personaje::logicaBarras()
 void Personaje::cargarMain()
 {
     char* path=new char[255];
-    strcpy(path,"chars/");
+    strcpy(path,"/sdcard/Fighter/chars/");
     strcat(path,char_name_ptr);
     strcat(path,"/main.xml\0");
 
-    TiXmlDocument doc_t(path);
+    TiXmlDocument doc_t("/sdcard/Fighter/chars/Evilken/main.xml");
     doc_t.LoadFile();
     TiXmlDocument *doc;
     doc=&doc_t;
@@ -791,8 +812,8 @@ void Personaje::cargarMain()
                         elemento_sprite=elemento_sprite->NextSiblingElement("Sprite"))
                 {
                     stringw path(elemento_sprite->Attribute("path"));
-                    stringw dir("chars/");
-                    path=dir+char_name+"/"+path;
+                    stringw dir("/sdcard/Fighter/chars/");
+                    path=dir+"Evilken"+"/"+path;
                     int escala=atoi(elemento_sprite->Attribute("scale"));
                     int alineacion_x=atoi(elemento_sprite->Attribute("align_x"));
                     int alineacion_y=atoi(elemento_sprite->Attribute("align_y"));
@@ -860,8 +881,8 @@ void Personaje::cargarMain()
             {
                 stringw variable(elemento_imagen->Attribute("variable"));
                 stringw path(elemento_imagen->Attribute("path"));
-                stringw dir("chars/");
-                path=dir+char_name+"/"+path;
+                stringw dir("/sdcard/Fighter/chars/");
+                path=dir+"Evilken"+"/"+path;
                 int escala=atoi(elemento_imagen->Attribute("scale"));
                 int alineacion_x=atoi(elemento_imagen->Attribute("align_x"));
                 int alineacion_y=atoi(elemento_imagen->Attribute("align_y"));
@@ -930,7 +951,7 @@ void Personaje::cargarMain()
                 int x2=atoi(elemento_imagen->Attribute("x2"));
                 int y2=atoi(elemento_imagen->Attribute("y2"));
                 stringw imagen(elemento_imagen->Attribute("image"));
-                imagen=stringw("chars/")+char_name+stringw("/")+imagen;
+                imagen=stringw("/sdcard/Fighter/chars/")+"Evilken"+stringw("/")+imagen;
 
                 if(imagen!=NULL)
                     agregarBarra(Barra(variable,variable+".max_value",variable+".current_value",variable+".periodic_modifier",variable+".period",video::SColor(alpha,r,g,b),core::rect<s32>(x1,y1,x2,y2),grafico->getTexture(imagen)));
@@ -943,8 +964,8 @@ void Personaje::cargarMain()
 void Personaje::cargarVars()
 {
     char* path=new char[255];
-    strcpy(path,"chars/");
-    strcat(path,char_name_ptr);
+    strcpy(path,"/sdcard/Fighter/chars/");
+    strcat(path,"Evilken");
     strcat(path,"/vars.xml\0");
 
     TiXmlDocument doc_t(path);
@@ -1030,8 +1051,8 @@ void Personaje::cargarVars()
 void Personaje::cargarInputs()
 {
     char* path=new char[255];
-    strcpy(path,"chars/");
-    strcat(path,char_name_ptr);
+    strcpy(path,"/sdcard/Fighter/chars/");
+    strcat(path,"Evilken");
     strcat(path,"/input.xml\0");
 
     TiXmlDocument doc_t(path);
@@ -1145,8 +1166,8 @@ void Personaje::cargarInputs()
 void Personaje::cargarTriggers()
 {
     char* path=new char[255];
-    strcpy(path,"chars/");
-    strcat(path,char_name_ptr);
+    strcpy(path,"/sdcard/Fighter/chars/");
+    strcat(path,"Evilken");
     strcat(path,"/triggers.xml\0");
 
     TiXmlDocument doc_t(path);
@@ -1198,8 +1219,8 @@ void Personaje::cargarTriggers()
 void Personaje::cargarSprites()
 {
     char* path=new char[255];
-    strcpy(path,"chars/");
-    strcat(path,char_name_ptr);
+    strcpy(path,"/sdcard/Fighter/chars/");
+    strcat(path,"Evilken");
     strcat(path,"/sprites.xml\0");
 
     TiXmlDocument doc_t(path);
@@ -1233,8 +1254,8 @@ void Personaje::cargarSprites()
                 int frame=atoi(e->Attribute("frame_number"))-1;
                 stringw str_variable(e->Attribute("variable"));
                 stringw path(e->Attribute("path"));
-                stringw dir("chars/");
-                path=dir+char_name+"/"+path;
+                stringw dir("/sdcard/Fighter/chars/");
+                path=dir+"Evilken"+"/"+path;
                 double escala;
                 e->QueryDoubleAttribute("scale",&escala);
                 int alineacion_x=atoi(e->Attribute("align_x"));
@@ -1269,8 +1290,8 @@ void Personaje::cargarSprites()
 void Personaje::cargarHitboxes()
 {
     char* path=new char[255];
-    strcpy(path,"chars/");
-    strcat(path,char_name_ptr);
+    strcpy(path,"/sdcard/Fighter/chars/");
+    strcat(path,"Evilken");
     strcat(path,"/hitboxes.xml\0");
 
     TiXmlDocument doc_t(path);
@@ -1326,8 +1347,8 @@ void Personaje::cargarHitboxes()
 void Personaje::cargarSfx()
 {
     char* path=new char[255];
-    strcpy(path,"chars/");
-    strcat(path,char_name_ptr);
+    strcpy(path,"/sdcard/Fighter/chars/");
+    strcat(path,"Evilken");
     strcat(path,"/sfx.xml\0");
 
     TiXmlDocument doc_t(path);
@@ -1345,13 +1366,13 @@ void Personaje::cargarSfx()
         stringw move(elemento_sonido->Attribute("move"));
 
         char*file=new char[255];
-        strcpy(file,"chars/");
+        strcpy(file,"/sdcard/Fighter/chars/");
 
 //        //convert char_name to char*
 //        size_t count = 255;
 //        c8* c_name = (char*)malloc( 255 );
 //        wcstombs(c_name, char_name.c_str(), count);
-        c8* c_name=grafico->toCharPtr(char_name);
+        c8* c_name=grafico->toCharPtr("Evilken");
 
 
         strcat(file,(char*)c_name);
@@ -1366,8 +1387,8 @@ void Personaje::cargarAnimations()
 {
     char* path_animations=new char[255];
     char* path_archivos=new char[255];
-    strcpy(path_animations,"chars/");
-    strcat(path_animations,char_name_ptr);
+    strcpy(path_animations,"/sdcard/Fighter/chars/");
+    strcat(path_animations,"Evilken");
 
     strcpy(path_archivos,path_animations);
     strcat(path_archivos,"/sprites/");

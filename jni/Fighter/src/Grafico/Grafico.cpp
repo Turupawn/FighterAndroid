@@ -4,10 +4,11 @@ Grafico::Grafico(Receiver* receiver)
 {
     camera_x=0;
     camera_y=0;
-    ventana_x=240;
-    ventana_y=320;
+    ventana_x=320;
+    ventana_y=240;
     video::E_DRIVER_TYPE driverType;
-    driverType = video::EDT_OPENGL;
+    driverType = video::EDT_OGLES1;
+    //driverType = video::EDT_OPENGL;
     //driverType = video::EDT_SOFTWARE;
     device = createDevice(driverType,core::dimension2d<u32>(ventana_x,ventana_y),true ,false, false, false,receiver);
     smgr = device->getSceneManager();
@@ -21,7 +22,7 @@ Grafico::Grafico(Receiver* receiver)
     driver = device->getVideoDriver();
 
     //init fonts
-    font = device->getGUIEnvironment()->getFont("menu/font.png");
+    font = device->getGUIEnvironment()->getFont("/sdcard/Fighter/menu/font.bmp");
 }
 
 bool Grafico::isWindowActive()

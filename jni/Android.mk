@@ -18,8 +18,7 @@ IRRIOOBJ = irr/CFileList.cpp irr/CFileSystem.cpp irr/CLimitReadFile.cpp irr/CMem
 IRROTHEROBJ = irr/CIrrDeviceConsole.cpp irr/CIrrDeviceStub.cpp irr/CLogger.cpp irr/Irrlicht.cpp irr/os.cpp
 IRRGUIOBJ = irr/CGUIButton.cpp irr/CGUICheckBox.cpp irr/CGUIComboBox.cpp irr/CGUIContextMenu.cpp irr/CGUIEditBox.cpp irr/CGUIEnvironment.cpp irr/CGUIFileOpenDialog.cpp irr/CGUIFont.cpp irr/CGUIImage.cpp irr/CGUIInOutFader.cpp irr/CGUIListBox.cpp irr/CGUIMenu.cpp irr/CGUIMeshViewer.cpp irr/CGUIMessageBox.cpp irr/CGUIModalScreen.cpp irr/CGUIScrollBar.cpp irr/CGUISpinBox.cpp irr/CGUISkin.cpp irr/CGUIStaticText.cpp irr/CGUITabControl.cpp irr/CGUITable.cpp irr/CGUIToolBar.cpp irr/CGUIWindow.cpp irr/CGUIColorSelectDialog.cpp irr/CDefaultGUIElementFactory.cpp irr/CGUISpriteBank.cpp irr/CGUIImageList.cpp irr/CGUITreeView.cpp
 
-TINYXMLOBJ = engine/utilities/tinyxml/tinystr.cpp engine/utilities/tinyxml/tinyxml.cpp engine/utilities/tinyxml/tinyxmlerror.cpp engine/utilities/tinyxml/tinyxmlparser.cpp
-ENGINEOBJ =  engine/camera.cpp engine/core.cpp engine/entity.cpp engine/event.cpp engine/map.cpp engine/propertyvalues.cpp engine/sprite.cpp engine/window.cpp
+TINYXMLOBJ = Fighter/src/TinyXml/tinystr.cpp Fighter/src/TinyXml/tinyxml.cpp Fighter/src/TinyXml/tinyxmlerror.cpp Fighter/src/TinyXml/tinyxmlparser.cpp
 
 FIGHTEROBJ = Fighter/src/Fighter.cpp Fighter/src/Stage/Stage.cpp Fighter/src/Sonido/Sonido.cpp Fighter/src/Sonido/Reproduccion.cpp Fighter/src/Personaje/Proyectil.cpp Fighter/src/Personaje/Movimiento.cpp Fighter/src/Personaje/ModificadorImagen.cpp Fighter/src/Personaje/Modificador.cpp Fighter/src/Personaje/Imagen.cpp Fighter/src/Personaje/Condicion.cpp Fighter/src/Personaje/Personaje.cpp Fighter/src/Personaje/ModificadorString.cpp Fighter/src/Personaje/ModificadorHitboxes.cpp Fighter/src/Personaje/ModificadorBarra.cpp Fighter/src/Personaje/HitBox.cpp Fighter/src/Personaje/Barra.cpp Fighter/src/Personaje/Paleta.cpp Fighter/src/Personaje/ModificadorPorVariable.cpp Fighter/src/Personaje/ModificadorEntero.cpp Fighter/src/Personaje/InputMovimiento.cpp Fighter/src/Personaje/Frame.cpp Fighter/src/Personaje/Animacion.cpp Fighter/src/Menu/MenuTexto.cpp Fighter/src/Menu/MenuImagen.cpp Fighter/src/Menu/MenuContenedor.cpp Fighter/src/Menu/MenuBoton.cpp Fighter/src/Menu/Elemento.cpp Fighter/src/Menu/MenuLista.cpp Fighter/src/Menu/Menu.cpp Fighter/src/Menu/MenuCharSelect.cpp Fighter/src/Menu/MenuBarra.cpp Fighter/src/Input/Receiver.cpp Fighter/src/Input/Input.cpp Fighter/src/Input/Boton.cpp Fighter/src/IA/Transicion.cpp Fighter/src/IA/IA.cpp Fighter/src/IA/Estado.cpp Fighter/src/IA/Automata.cpp Fighter/src/Grafico/Grafico.cpp
 
@@ -44,7 +43,7 @@ LOCAL_SRC_FILES := \
      $(IRRMESHOBJ) $(IRROBJ) $(IRRPARTICLEOBJ) $(IRRANIMOBJ) \
      $(IRRSWRENDEROBJ) $(IRRIOOBJ) $(IRROTHEROBJ) \
      $(IRRGUIOBJ) $(ZLIBOBJ) $(JPEGLIBOBJ) $(LIBPNGOBJ) $(LIBAESGM) \
-     $(BZIP2OBJ) $(TINYXMLOBJ)  $(ENGINEOBJ) $(FIGHTEROBJ)
+     $(BZIP2OBJ) $(TINYXMLOBJ)  $(FIGHTEROBJ)
 
 
 LOCAL_LDLIBS := -lGLESv1_CM -ldl -llog

@@ -1,7 +1,7 @@
 #ifndef FIGHTER_H
 #define FIGHTER_H
 
-#include "tinyxml.h"
+#include "TinyXml/tinyxml.h"
 //#include "Menu/Menu.h"
 #include <stdio.h>
 

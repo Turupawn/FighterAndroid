@@ -2,6 +2,7 @@
 
 Receiver::Receiver()
 {
+up=down=left=right=a=b=false;
 //    for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
 //        KeyIsDown[i] = false;
       for (int i = 0; i <= KEY_KEY_CODES_COUNT; i++)
@@ -98,6 +99,28 @@ bool Receiver::IsKeyPressed(char keycode)
 
 bool Receiver::IsKeyDownn(char keycode)
 {
+  if((keycode==irr::KEY_DOWN || keycode==irr::KEY_KEY_S) && down)
+  {
+    return true;
+  }
+  if((keycode==irr::KEY_UP || keycode==irr::KEY_KEY_W) && up)
+  {
+    return true;
+  }
+  if((keycode==irr::KEY_LEFT || keycode==irr::KEY_KEY_A) && left)
+  {
+    return true;
+  }
+  if((keycode==irr::KEY_RIGHT || keycode==irr::KEY_KEY_D) && right)
+  {
+    return true;
+  }
+  if((keycode==irr::KEY_RETURN || keycode==irr::KEY_KEY_U || keycode==irr::KEY_KEY_M) && a)
+  {
+    return true;
+  }
+
+
   if (keyState[(int)keycode] == DOWN || keyState[(int)keycode] == PRESSED)
   {
      return true;

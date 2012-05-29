@@ -1,6 +1,8 @@
 #include "Menu/Menu.h"
 Menu::Menu(Grafico* grafico,Receiver* receiver,Sonido* sonido,char* archivo,Menu*padre)
 {
+bool_vs_screen=false;
+
     this->fighter=NULL;
     this->hijo=NULL;
     this->padre=padre;
@@ -11,7 +13,8 @@ Menu::Menu(Grafico* grafico,Receiver* receiver,Sonido* sonido,char* archivo,Menu
     this->save_inputs_signal=false;
     this->char_select=NULL;
 
-        TiXmlDocument doc_t((char*)"config.xml");
+
+        TiXmlDocument doc_t((char*)"/sdcard/Fighter/config.xml");
         doc_t.LoadFile();
         TiXmlDocument *doc;
         doc=&doc_t;
@@ -46,7 +49,7 @@ Menu::Menu(Grafico* grafico,Receiver* receiver,Sonido* sonido,char* archivo,Menu
     //inits
     tecla_arriba=true;
     //sonido->reproducirSonido(stringw("Menu.music"));
-    llenarInputsBotones();
+    //llenarInputsBotones();
     inputa=new Input();
     inputb=new Input();
     inputa->cargarDesdeXML(1,receiver);
@@ -55,6 +58,8 @@ Menu::Menu(Grafico* grafico,Receiver* receiver,Sonido* sonido,char* archivo,Menu
     tecla_arriba_p2=true;
     bool_break=false;
     bool_fighter=false;
+    bool_menu_hijo=false;
+/**/
 }
 
 void Menu::waitSync()
@@ -71,6 +76,7 @@ void Menu::waitSync()
 
 void Menu::logicaCharSelect()
 {
+/*
     //char select
     inputa->actualizarBuffer();
     if(inputa->getBufferInputs()[0]!="6"
@@ -82,43 +88,44 @@ void Menu::logicaCharSelect()
     {
         tecla_arriba_p1=true;
     }
-    if(char_select!=NULL && tecla_arriba_p1)
+*/
+    if(char_select!=NULL)// && tecla_arriba_p1)
     {
         if(char_select->listoPA())
         {
-        }else if(inputa->getBufferInputs()[0]=="6")
+        }else if(receiver->IsKeyDownn(irr::KEY_RIGHT))
         {
             char_select->select_p1_x++;
             if(char_select->select_p1_x>=char_select->size_x)
                 char_select->select_p1_x=0;
             tecla_arriba_p1=false;
-        }else if(inputa->getBufferInputs()[0]=="4")
+        }else if(receiver->IsKeyDownn(irr::KEY_LEFT))
         {
             char_select->select_p1_x--;
             if(char_select->select_p1_x<0)
                 char_select->select_p1_x=char_select->size_x-1;
             tecla_arriba_p1=false;
         }
-        else if(inputa->getBufferInputs()[0]=="2")
+        else if(receiver->IsKeyDownn(irr::KEY_DOWN))
         {
             char_select->select_p1_y++;
             if(char_select->select_p1_y>=char_select->size_y)
                 char_select->select_p1_y=0;
             tecla_arriba_p1=false;
         }
-        else if(inputa->getBufferInputs()[0]=="8")
+        else if(receiver->IsKeyDownn(irr::KEY_UP))
         {
             char_select->select_p1_y--;
             if(char_select->select_p1_y<0)
                 char_select->select_p1_y=char_select->size_y-1;
             tecla_arriba_p1=false;
         }
-        else if(inputa->getBufferInputs()[0]=="a")
+        else if(receiver->IsKeyDownn(irr::KEY_KEY_U))
         {
             char_select->lockPA(0);
             tecla_arriba_p1=false;
         }
-        else if(inputa->getBufferInputs()[0]=="b")
+        else if(receiver->IsKeyDownn(irr::KEY_KEY_I))
         {
             char_select->lockPA(1);
             tecla_arriba_p1=false;
@@ -155,6 +162,7 @@ void Menu::logicaCharSelect()
         }
     }
 
+/*
     //char select b
     inputb->actualizarBuffer();
     if(inputb->getBufferInputs()[0]!="6"
@@ -166,38 +174,39 @@ void Menu::logicaCharSelect()
     {
         tecla_arriba_p2=true;
     }
-    if(char_select!=NULL && tecla_arriba_p2)
+*/
+    if(char_select!=NULL)// && tecla_arriba_p2)
     {
         if(char_select->listoPB())
         {
-        }else if(inputb->getBufferInputs()[0]=="6")
+        }else if(receiver->IsKeyDownn(irr::KEY_RIGHT))
         {
             char_select->select_p2_x++;
             if(char_select->select_p2_x>=char_select->size_x)
                 char_select->select_p2_x=0;
             tecla_arriba_p2=false;
-        }else if(inputb->getBufferInputs()[0]=="4")
+        }else if(receiver->IsKeyDownn(irr::KEY_LEFT))
         {
             char_select->select_p2_x--;
             if(char_select->select_p2_x<0)
                 char_select->select_p2_x=char_select->size_x-1;
             tecla_arriba_p2=false;
         }
-        else if(inputb->getBufferInputs()[0]=="2")
+        else if(receiver->IsKeyDownn(irr::KEY_DOWN))
         {
             char_select->select_p2_y++;
             if(char_select->select_p2_y>=char_select->size_y)
                 char_select->select_p2_y=0;
             tecla_arriba_p2=false;
         }
-        else if(inputb->getBufferInputs()[0]=="8")
+        else if(receiver->IsKeyDownn(irr::KEY_UP))
         {
             char_select->select_p2_y--;
             if(char_select->select_p2_y<0)
                 char_select->select_p2_y=char_select->size_y-1;
             tecla_arriba_p2=false;
         }
-        else if(inputb->getBufferInputs()[0]=="a")
+        else if(receiver->IsKeyDownn(irr::KEY_KEY_M))
         {
             char_select->lockPB(0);
             tecla_arriba_p2=false;
@@ -243,22 +252,24 @@ void Menu::logicaCharSelect()
 void Menu::logicaAcciones()
 {
     //acciones
-    if(!receiver->IsKeyDownn(irr::KEY_LEFT)
-       && !receiver->IsKeyDownn(irr::KEY_RIGHT)
-       && !receiver->IsKeyDownn(irr::KEY_UP)
-       && !receiver->IsKeyDownn(irr::KEY_DOWN)
-       && !receiver->IsKeyDownn(irr::KEY_RETURN)
-       )
-        tecla_arriba=true;
-    if(tecla_arriba)
+    //if(!receiver->IsKeyDownn(irr::KEY_UP)
+    //   && !receiver->IsKeyDownn(irr::KEY_DOWN)
+       //&& !receiver->IsKeyDownn(irr::KEY_LEFT)
+       //&& !receiver->IsKeyDownn(irr::KEY_RIGHT)
+       //&& !receiver->IsKeyDownn(irr::KEY_RETURN)
+       //)
+        //tecla_arriba=true;
+    if(true)//tecla_arriba)
     {
         tecla_arriba=false;
         if(receiver->IsKeyDownn(irr::KEY_DOWN))
         {
+	__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "down");
             ((MenuContenedor*)contenedor_actual)->avanzar();
         }
         else if(receiver->IsKeyDownn(irr::KEY_UP))
         {
+	__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "up");
             ((MenuContenedor*)contenedor_actual)->retroceder();
         }
         else if(receiver->IsKeyDownn(irr::KEY_RIGHT))
@@ -282,10 +293,6 @@ void Menu::logicaAcciones()
                 if(ml->getAccion()==1)
                 {
                     MenuTexto*mt=(MenuTexto*)ml->getElementoActual();
-//                    //convert to char*
-//                    size_t count = 255;
-//                    c8* str_ptr= (char*)malloc( 255 );
-//                    wcstombs(str_ptr, mt->texto.c_str(), count);
 
                     c8* str_ptr=grafico->toCharPtr(mt->texto);
 
@@ -311,10 +318,6 @@ void Menu::logicaAcciones()
                 if(ml->getAccion()==0)
                 {
                     MenuTexto*mt=(MenuTexto*)ml->getElementoActual();
-//                    //convert to char*
-//                    size_t count = 255;
-//                    c8* str_ptr= (char*)malloc( 255 );
-//                    wcstombs(str_ptr, mt->texto.c_str(), count);
 
                     c8* str_ptr=grafico->toCharPtr(mt->texto);
 
@@ -323,10 +326,6 @@ void Menu::logicaAcciones()
                 if(ml->getAccion()==1)
                 {
                     MenuTexto*mt=(MenuTexto*)ml->getElementoActual();
-//                    //convert to char*
-//                    size_t count = 255;
-//                    c8* str_ptr= (char*)malloc( 255 );
-//                    wcstombs(str_ptr, mt->texto.c_str(), count);
 
                     c8* str_ptr=grafico->toCharPtr(mt->texto);
 
@@ -351,35 +350,45 @@ void Menu::logicaAcciones()
                 {
                     if(char_select->listo())
                     {
-                        printVsScreen(char_select->getLockedPreviewsPA(),char_select->getLockedPreviewsPB());
+bool_vs_screen=true;
+                        //printVsScreen(char_select->getLockedPreviewsPA(),char_select->getLockedPreviewsPB());
 
+/*
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU2");
                         inputa=new Input();
                         inputb=new Input();
-                        //this->inputa->cargarIAXML(1);
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU3");
                         inputa->cargarDesdeXML(1,receiver);
                         inputb->cargarDesdeXML(2,receiver);
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU4");
                         char *path_s=new char[255];
                         strcpy(path_s,"");
                         strcat(path_s,(char*)getStage());
 
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU5");
                         Personaje* p1a=getPersonajeA(0,false);
                         Personaje* p1b=getPersonajeB(0,false);
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU6");
                         p1a->personaje_contrario=p1b;
                         p1b->personaje_contrario=p1a;
 
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU7");
                         pa.clear();
                         pa.push_back(p1a);
 
                         pb.clear();
                         pb.push_back(p1b);
-
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU8");
                         stage=new Stage(grafico,sonido);
                         stage->cargarDesdeXML((char*)path_s);
                         sonido->pararSonido("Menu.music");
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU9");
                         fighter=new Fighter(sonido,grafico,receiver,pa,pb,stage,this);
                         //delete fighter;
                         //sonido->reproducirSonido(stringw("Menu.music"));
                         bool_fighter=true;
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU10");
+*/
                     }
                 }
 
@@ -447,7 +456,6 @@ void Menu::logicaAcciones()
                     if(char_select->listo())
                     {
                         printVsScreen(char_select->getLockedPreviewsPA(),char_select->getLockedPreviewsPB());
-
                         char *path_s=new char[255];
                         strcpy(path_s,"");
                         strcat(path_s,(char*)getStage());
@@ -623,7 +631,7 @@ void Menu::logicaAcciones()
                     root->LinkEndChild(r);
                     doc->LinkEndChild(root);
 
-                    doc->SaveFile("misc/config.xml");
+                    doc->SaveFile("/sdcard/Fighter/misc/config.xml");
                 }
                 if(mb->getAccion()>=10 && mb->getAccion()<=29)
                 {
@@ -724,10 +732,56 @@ void Menu::logicaAcciones()
 
 void Menu::logicaMenu()
 {
+if(bool_vs_screen)
+{
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU2");
+                        inputa=new Input();
+                        inputb=new Input();
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU3");
+                        inputa->cargarDesdeXML(1,receiver);
+                        inputb->cargarDesdeXML(2,receiver);
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU4");
+                        char *path_s=new char[255];
+                        strcpy(path_s,"");
+                        strcat(path_s,(char*)getStage());
+
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU5");
+                        Personaje* p1a=getPersonajeA(0,false);
+                        Personaje* p1b=getPersonajeB(0,false);
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU6");
+                        p1a->personaje_contrario=p1b;
+                        p1b->personaje_contrario=p1a;
+
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU7");
+                        pa.clear();
+                        pa.push_back(p1a);
+
+                        pb.clear();
+                        pb.push_back(p1b);
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU8");
+                        stage=new Stage(grafico,sonido);
+                        stage->cargarDesdeXML((char*)path_s);
+                        sonido->pararSonido("Menu.music");
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU9");
+                        fighter=new Fighter(sonido,grafico,receiver,pa,pb,stage,this);
+                        //delete fighter;
+                        //sonido->reproducirSonido(stringw("Menu.music"));
+                        bool_fighter=true;
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU10");
+}
+
     dibujarMenu();
     waitSync();
     logicaCharSelect();
     logicaAcciones();
+
+receiver->up=false;
+receiver->down=false;
+receiver->left=false;
+receiver->right=false;
+
+receiver->a=false;
+receiver->b=false;
 }
 
 void Menu::loopMenu()
@@ -748,26 +802,39 @@ void Menu::loopMenu()
 
 void Menu::dibujarMenu()
 {
+if(!bool_vs_screen)
+{
     if (grafico->isWindowActive())
     {
         grafico->beginScene();
+
+
         for(int i=0;i<(int)elementos.size();i++)
+	{
             elementos[i]->dibujar();
+	}
         grafico->endScene();
     }
     grafico->run();
+}else
+{
+  printVsScreen(char_select->getLockedPreviewsPA(),char_select->getLockedPreviewsPB());
+}
 }
 
 void Menu::cargarConfig()
 {
-    TiXmlDocument doc_t("misc/config.xml");
+
+    TiXmlDocument doc_t("/sdcard/Fighter/misc/config.xml");
     doc_t.LoadFile();
     TiXmlDocument *doc;
     doc=&doc_t;
+
     TiXmlNode* node=doc->FirstChild("ConfigFile");
+
     TiXmlElement* ai_elem=node->FirstChild("AILevel")->ToElement();
-    TiXmlElement* time_elem=node->FirstChild("MatchTime")->ToElement();
     TiXmlElement* rounds_elem=node->FirstChild("Rounds")->ToElement();
+    TiXmlElement* time_elem=node->FirstChild("MatchTime")->ToElement();
 
     ai_level=atoi(ai_elem->Attribute("level"));
     time=atoi(time_elem->Attribute("seconds"));
@@ -776,6 +843,7 @@ void Menu::cargarConfig()
 
 void Menu::cargarDesdeXml(char* archivo,vector<stringw> chars,vector<stringw> stages)
 {
+
     cargarConfig();
 
     TiXmlDocument doc_t( archivo );
@@ -790,10 +858,12 @@ void Menu::cargarDesdeXml(char* archivo,vector<stringw> chars,vector<stringw> st
             elemento=elemento->NextSibling())
     {
         TiXmlElement* e=elemento->ToElement();
+
+
         if(strcmp(e->Value(),"CharSelect")==0)
         {
             stringw path(e->Attribute("path"));
-            stringw dir("menu/");
+            stringw dir("/sdcard/Fighter/menu/");
             path=dir+path;
             char_select=new MenuCharSelect(grafico,atoi(e->Attribute("x")),atoi(e->Attribute("y")),atoi(e->Attribute("width")),atoi(e->Attribute("height")),
                                                           atoi(e->Attribute("size_x")),atoi(e->Attribute("size_y")),atoi(e->Attribute("box_size_x")),atoi(e->Attribute("box_size_y")),
@@ -803,16 +873,23 @@ void Menu::cargarDesdeXml(char* archivo,vector<stringw> chars,vector<stringw> st
                                                           atoi(e->Attribute("preview_player2_x")),atoi(e->Attribute("preview_player2_y")),
                                                           chars
                                                           );
+
+char_select->no_portrait=grafico->getTexture(irr::io::path("/sdcard/Fighter/menu/no_portrait.png"));
+
             elementos.push_back((Elemento*)char_select);
-        }else if(strcmp(e->Value(),"Image")==0)
+        }else 
+
+if(strcmp(e->Value(),"Image")==0)
         {
             stringw path(e->Attribute("path"));
-            stringw dir("menu/");
+            stringw dir("/sdcard/Fighter/menu/");
             path=dir+path;
             elementos.push_back((Elemento*)new MenuImagen(grafico,atoi(e->Attribute("x")),atoi(e->Attribute("y")),atoi(e->Attribute("width")),atoi(e->Attribute("height")),strcmp(e->Attribute("visible"),"true")==0,
                                                           grafico->getTexture(irr::io::path(path)),""
                                                           ));
-        }else if(strcmp(e->Value(),"Text")==0)
+        }
+
+else if(strcmp(e->Value(),"Text")==0)
         {
                 elementos.push_back((Elemento*)new MenuTexto(grafico,atoi(e->Attribute("x")),atoi(e->Attribute("y")),atoi(e->Attribute("width")),atoi(e->Attribute("height")),strcmp(e->Attribute("visible"),"true")==0,
                                                              e->Attribute("text"),video::SColor(atoi(e->Attribute("alpha")),atoi(e->Attribute("red")),atoi(e->Attribute("green")),atoi(e->Attribute("blue")))
@@ -825,6 +902,8 @@ void Menu::cargarDesdeXml(char* archivo,vector<stringw> chars,vector<stringw> st
                     elem_container=elem_container->NextSibling())
             {
                 TiXmlElement* ec=elem_container->ToElement();
+
+		//BOTON
                 if(strcmp(ec->Value(),"Button")==0)
                 {
                     int action=-1;
@@ -894,16 +973,18 @@ void Menu::cargarDesdeXml(char* archivo,vector<stringw> chars,vector<stringw> st
                     strcpy(menu_load,"");
                     if(action==4)
                     {
-                        strcpy(menu_load,"menu/");
+                        strcpy(menu_load,"/sdcard/Fighter/menu/");
                         strcat(menu_load,ec->Attribute("load_menu"));
                     }
 
                     elementos_contenedor.push_back((Elemento*)new MenuBoton(grafico,atoi(ec->Attribute("x")),atoi(ec->Attribute("y")),atoi(ec->Attribute("width")),atoi(ec->Attribute("height")),strcmp(ec->Attribute("visible"),"true")==0,
-                                                                            grafico->getTexture(stringw("menu/")+stringw(ec->Attribute("path"))),atoi(ec->Attribute("text_x")),atoi(ec->Attribute("text_y")),ec->Attribute("text"),video::SColor(atoi(ec->Attribute("alpha")),atoi(ec->Attribute("red")),atoi(ec->Attribute("green")),atoi(ec->Attribute("blue"))),
-                                                                            grafico->getTexture(stringw("menu/")+stringw(ec->Attribute("path_selected"))),atoi(ec->Attribute("text_x_selected")),atoi(ec->Attribute("text_y_selected")),ec->Attribute("text_selected"),video::SColor(atoi(ec->Attribute("alpha_selected")),atoi(ec->Attribute("red_selected")),atoi(ec->Attribute("green_selected")),atoi(ec->Attribute("blue_selected"))),
+                                                                            grafico->getTexture(stringw("/sdcard/Fighter/menu/")+stringw(ec->Attribute("path"))),atoi(ec->Attribute("text_x")),atoi(ec->Attribute("text_y")),ec->Attribute("text"),video::SColor(atoi(ec->Attribute("alpha")),atoi(ec->Attribute("red")),atoi(ec->Attribute("green")),atoi(ec->Attribute("blue"))),
+                                                                            grafico->getTexture(stringw("/sdcard/Fighter/menu/")+stringw(ec->Attribute("path_selected"))),atoi(ec->Attribute("text_x_selected")),atoi(ec->Attribute("text_y_selected")),ec->Attribute("text_selected"),video::SColor(atoi(ec->Attribute("alpha_selected")),atoi(ec->Attribute("red_selected")),atoi(ec->Attribute("green_selected")),atoi(ec->Attribute("blue_selected"))),
                                                                             action,menu_load
                                                                             ));
                 }
+
+		//BARRA
                 if(strcmp(ec->Value(),"Bar")==0)
                 {
                     int accion=-1;
@@ -918,12 +999,14 @@ void Menu::cargarDesdeXml(char* archivo,vector<stringw> chars,vector<stringw> st
                     }
                         accion=atoi(ec->Attribute("action"));
                     elementos_contenedor.push_back((Elemento*)new MenuBarra(grafico,atoi(ec->Attribute("x")),atoi(ec->Attribute("y")),atoi(ec->Attribute("width")),atoi(ec->Attribute("height")),strcmp(ec->Attribute("visible"),"true")==0,
-                                                                            grafico->getTexture(stringw("menu/")+stringw(ec->Attribute("path_bg"))),atoi(ec->Attribute("bar_x")),atoi(ec->Attribute("bar_y")),grafico->getTexture(stringw("menu/")+stringw(ec->Attribute("path"))),
-                                                                            grafico->getTexture(stringw("menu/")+stringw(ec->Attribute("path_bg_selected"))),atoi(ec->Attribute("bar_x_selected")),atoi(ec->Attribute("bar_y_selected")),grafico->getTexture(stringw("menu/")+stringw(ec->Attribute("path_selected"))),
+                                                                            grafico->getTexture(stringw("/sdcard/Fighter/menu/")+stringw(ec->Attribute("path_bg"))),atoi(ec->Attribute("bar_x")),atoi(ec->Attribute("bar_y")),grafico->getTexture(stringw("/sdcard/Fighter/menu/")+stringw(ec->Attribute("path"))),
+                                                                            grafico->getTexture(stringw("/sdcard/Fighter/menu/")+stringw(ec->Attribute("path_bg_selected"))),atoi(ec->Attribute("bar_x_selected")),atoi(ec->Attribute("bar_y_selected")),grafico->getTexture(stringw("/sdcard/Fighter/menu/")+stringw(ec->Attribute("path_selected"))),
                                                                             atoi(ec->Attribute("max")),default_value,accion
                                                                             )
                                                    );
                 }
+
+		//LISTA
                 if(strcmp(ec->Value(),"List")==0)
                 {
                     vector<Elemento*>elem_lista;
@@ -940,7 +1023,7 @@ void Menu::cargarDesdeXml(char* archivo,vector<stringw> chars,vector<stringw> st
                         if(strcmp(el->Value(),"Image")==0)
                         {
                             stringw path(el->Attribute("path"));
-                            stringw dir("menu/");
+                            stringw dir("/sdcard/Fighter/menu/");
                             path=dir+path;
                             elem_lista.push_back((Elemento*)new MenuImagen(grafico,atoi(el->Attribute("x")),atoi(el->Attribute("y")),atoi(el->Attribute("width")),atoi(el->Attribute("height")),strcmp(el->Attribute("visible"),"true")==0,
                                                                           grafico->getTexture(irr::io::path(path)),""
@@ -948,12 +1031,6 @@ void Menu::cargarDesdeXml(char* archivo,vector<stringw> chars,vector<stringw> st
                         }
                         if(strcmp(el->Value(),"chars")==0)
                         {
-//                            int player=atoi(el->Attribute("player"));
-//                            int pos=atoi(el->Attribute("number"));
-//                            if(player==1)
-//                                pos_pa[pos]=elementos_contenedor.size();
-//                            if(player==2)
-//                                pos_pb[pos]=elementos_contenedor.size();
                             for(int i=0;i<(int)chars.size();i++)
                             elem_lista.push_back((Elemento*)new MenuTexto(grafico,atoi(el->Attribute("x")),atoi(el->Attribute("y")),atoi(el->Attribute("width")),atoi(el->Attribute("height")),strcmp(el->Attribute("visible"),"true")==0,
                                                              chars[i],video::SColor(atoi(el->Attribute("alpha")),atoi(el->Attribute("red")),atoi(el->Attribute("green")),atoi(el->Attribute("blue")))
@@ -964,11 +1041,8 @@ void Menu::cargarDesdeXml(char* archivo,vector<stringw> chars,vector<stringw> st
                             pos_stage=elementos_contenedor.size();
                             for(int i=0;i<(int)stages.size();i++)
                             elem_lista.push_back((Elemento*)new MenuImagen(grafico,atoi(el->Attribute("x")),atoi(el->Attribute("y")),atoi(el->Attribute("width")),atoi(el->Attribute("height")),strcmp(el->Attribute("visible"),"true")==0,
-                                                                          grafico->getTexture(irr::io::path(stringw("stages/")+stages[i]+stringw("/images/preview.png"))),stages[i]
+                                                                          grafico->getTexture(irr::io::path(stringw("/sdcard/Fighter/stages/")+stages[i]+stringw("/images/preview.png"))),stages[i]
                                                                            ));
-//                            elem_lista.push_back((Elemento*)new MenuTexto(grafico,atoi(el->Attribute("x")),atoi(el->Attribute("y")),atoi(el->Attribute("width")),atoi(el->Attribute("height")),strcmp(el->Attribute("visible"),"true")==0,
-//                                                             stages[i],video::SColor(atoi(el->Attribute("alpha")),atoi(el->Attribute("red")),atoi(el->Attribute("green")),atoi(el->Attribute("blue")))
-//                                                             ));
                         }
                     }
                     int accion=-1;
@@ -980,22 +1054,27 @@ void Menu::cargarDesdeXml(char* archivo,vector<stringw> chars,vector<stringw> st
                             accion=1;
                     }
                     elementos_contenedor.push_back((Elemento*)new MenuLista(grafico,atoi(ec->Attribute("x")),atoi(ec->Attribute("y")),atoi(ec->Attribute("width")),atoi(ec->Attribute("height")),strcmp(ec->Attribute("visible"),"true")==0,
-                                                                            atoi(ec->Attribute("arrow_left_x")),atoi(ec->Attribute("arrow_left_y")),grafico->getTexture(stringw("menu/")+stringw(ec->Attribute("path_left"))),
-                                                                            atoi(ec->Attribute("arrow_right_x")),atoi(ec->Attribute("arrow_right_y")),grafico->getTexture(stringw("menu/")+stringw(ec->Attribute("path_right"))),
-                                                                            //atoi(ec->Attribute("arrow_right_x")),0,grafico->getTexture("menu/flecha_izq2.png"),150,0,grafico->getTexture("menu/flecha_der2.png"),
-                                                                            atoi(ec->Attribute("arrow_left_x_selected")),atoi(ec->Attribute("arrow_left_y_selected")),grafico->getTexture(stringw("menu/")+stringw(ec->Attribute("path_left_selected"))),
-                                                                            atoi(ec->Attribute("arrow_right_x_selected")),atoi(ec->Attribute("arrow_right_y_selected")),grafico->getTexture(stringw("menu/")+stringw(ec->Attribute("path_right_selected"))),
+                                                                            atoi(ec->Attribute("arrow_left_x")),atoi(ec->Attribute("arrow_left_y")),grafico->getTexture(stringw("/sdcard/Fighter/menu/")+stringw(ec->Attribute("path_left"))),
+                                                                            atoi(ec->Attribute("arrow_right_x")),atoi(ec->Attribute("arrow_right_y")),grafico->getTexture(stringw("/sdcard/Fighter/menu/")+stringw(ec->Attribute("path_right"))),
+                                                                            atoi(ec->Attribute("arrow_left_x_selected")),atoi(ec->Attribute("arrow_left_y_selected")),grafico->getTexture(stringw("/sdcard/Fighter/menu/")+stringw(ec->Attribute("path_left_selected"))),
+                                                                            atoi(ec->Attribute("arrow_right_x_selected")),atoi(ec->Attribute("arrow_right_y_selected")),grafico->getTexture(stringw("/sdcard/Fighter/menu/")+stringw(ec->Attribute("path_right_selected"))),
                                                                             elem_lista,
                                                                             accion
                                                                             )
                                                    );
                 }
+
+	    //FINAL Y AGREGACION
             }
             contenedor_actual=new MenuContenedor(grafico,atoi(e->Attribute("x")),atoi(e->Attribute("y")),atoi(e->Attribute("width")),atoi(e->Attribute("height")),strcmp(e->Attribute("visible"),"true")
                                                               ,elementos_contenedor);
             elementos.push_back((Elemento*)contenedor_actual);
         }
+/**/
     }
+
+
+/**/
 }
 
 Personaje* Menu::getPersonajeA(int num,bool ia)
@@ -1115,7 +1194,7 @@ void Menu::escribirInputsXML(Input* ia,Input* ib)
 {
     TiXmlDocument *doc=new TiXmlDocument();
     ib->getXML(ia->getXML(doc));
-    doc->SaveFile( "misc/inputs.xml" );
+    doc->SaveFile( "/sdcard/Fighter/misc/inputs.xml" );
 }
 
 stringw Menu::getInputPressed()
@@ -1405,7 +1484,7 @@ void Menu::printVsScreen(vector<irr::video::ITexture*>pa_previews,vector<irr::vi
     {
         grafico->beginScene();
 
-            irr::video::ITexture* texture=grafico->getTexture("misc/vs_screen.png");
+            irr::video::ITexture* texture=grafico->getTexture("/sdcard/Fighter/misc/vs_screen.png");
             grafico->draw2DImage
             (   texture,
                 irr::core::dimension2d<irr::f32> (texture->getOriginalSize ().Width,texture->getOriginalSize ().Height),

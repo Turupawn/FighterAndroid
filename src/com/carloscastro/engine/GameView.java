@@ -26,13 +26,12 @@ public class GameView extends GLSurfaceView {
 	        lastEvent.mX = event.getX();
 	        lastEvent.mY = event.getY();
 	        if (mRenderer!=null) {
+		        	//mRenderer.mStatus.down=!mRenderer.mStatus.up;
 	            mActivity.nativeSendEvent(lastEvent);
 	        }
 	        return true;
 	    }
-
 	   GameRenderer mRenderer;
-
 }
 
 
@@ -40,7 +39,7 @@ class GameRenderer implements GLSurfaceView.Renderer {
     private Game mActivity;
     private int mWindowWidth;
     private int mWindowHeight;
-    private GameStatus mStatus;
+    public GameStatus mStatus;
 
     public GameRenderer(Game activity) {
         mActivity = activity;
@@ -61,8 +60,9 @@ class GameRenderer implements GLSurfaceView.Renderer {
     }
 
     public void onDrawFrame(GL10 gl) {
-       
+    	
         Game.nativeDrawIteration(mStatus);
+        
         if (mStatus.mQuit) {
             Log.e("Irrlicht", "QUIT");
             mActivity.finish();
@@ -75,9 +75,19 @@ class GameEvent {
     public int mAction;
     public float mX;
     public float mY;
+    
+    /*
+	public boolean down;
+	public boolean up;
+	public boolean left;
+	public boolean right;
+	
+	public boolean a;
+	public boolean b;
+     */
 }
 
 class GameStatus {
-    public boolean mQuit;
+	public boolean mQuit;
 }
 

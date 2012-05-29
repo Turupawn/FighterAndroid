@@ -23,6 +23,8 @@ public:
 class MenuCharSelect:Elemento
 {
 private:
+
+public:
     int size_cuadro_x,size_cuadro_y;
     int separacion_x,separacion_y;
     int max_locked_chars_pa;
@@ -39,7 +41,7 @@ private:
     irr::video::ITexture* locked_char_p1;
     irr::video::ITexture* locked_char_p2;
     irr::video::ITexture* no_portrait;
-public:
+
     int select_p1_x,select_p1_y;
     int select_p2_x,select_p2_y;
     int size_x,size_y;

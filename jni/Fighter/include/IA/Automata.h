@@ -3,7 +3,7 @@
 
 
 #include "IA/Estado.h"
-#include "tinyxml.h"
+#include "TinyXml/tinyxml.h"
 #include <irrlicht.h>
 using namespace irr;
 using namespace core;
