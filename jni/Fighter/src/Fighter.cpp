@@ -1,6 +1,7 @@
 #include "../include/Fighter.h"
 Fighter::Fighter(Sonido* sonido,Grafico* grafico,Receiver* receiver,vector<Personaje*>pa,vector<Personaje*>pb,Stage*stage,Menu*padre)
 {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NYUU11");
     this->padre=padre;
     duracion_ko=30;
     tiempo_actual_ko=0;
@@ -20,7 +21,7 @@ Fighter::Fighter(Sonido* sonido,Grafico* grafico,Receiver* receiver,vector<Perso
         pa[i]->stage_piso=stage->pos_piso;
     for(int i=0; i<(int)pb.size(); i++)
         pb[i]->stage_piso=stage->pos_piso;
-
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NYUU12");
     //Engines
     this->sonido=sonido;
     this->grafico=grafico;
@@ -51,7 +52,7 @@ Fighter::Fighter(Sonido* sonido,Grafico* grafico,Receiver* receiver,vector<Perso
     getPaActual()->setString("orientation","d");
     getPbActual()->setString("orientation","i");
     //loopJuego();
-
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NYUU13");
     getPaActual()->comparacion_hp=getPaActual()->getEntero("hp.current_value");
     getPaActual()->comparacion_hp_contrario=getPbActual()->getEntero("hp.current_value");
 
@@ -67,6 +68,7 @@ Fighter::Fighter(Sonido* sonido,Grafico* grafico,Receiver* receiver,vector<Perso
 
     bool_beak=false;
     bool_pausa=false;
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NYUU14");
 }
 
 Fighter::~Fighter()
@@ -594,6 +596,7 @@ void Fighter::logica()
 
 void Fighter::logicaFighter()
 {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii11");
     //Salir con cualquier boton si ya termino la pelea
     if(game_over_a || game_over_b)
     {
@@ -613,6 +616,7 @@ void Fighter::logicaFighter()
                return;
            }
     }
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii12");
     //receiver->endEventProcess();
     grafico->device->run();
     //cout<<grafico->device->getTimer()->getTime()<<endl;
@@ -635,9 +639,19 @@ void Fighter::logicaFighter()
     //logica
     logica();
 
+receiver->up=false;
+receiver->down=false;
+receiver->left=false;
+receiver->right=false;
+
+receiver->a=false;
+receiver->b=false;
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii13");
     //render
     render();
     //receiver->startEventProcess();
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii14");
+
 }
 
 void Fighter::loopJuego()

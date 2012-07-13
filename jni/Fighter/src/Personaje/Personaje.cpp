@@ -460,6 +460,7 @@ void Personaje::aplicarModificador(ModificadorEntero* me,bool flip)
         }
     }
 
+
 }
 
 void Personaje::aplicarModificador(ModificadorString* ms)
@@ -676,47 +677,27 @@ void Personaje::cargarDesdeXML(int px,int py,Input* input,char* nombre)
     setEntero("position_x",px);
     setEntero("position_y",py);
 
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii1");
-
     char* path_palettes=new char[255];
     strcpy(path_palettes,"/sdcard/Fighter/chars/");
     strcat(path_palettes,char_name_ptr);
     strcat(path_palettes,"/palettes.xml\0");
     paleta.cargarXML("/sdcard/Fighter/chars/Evilken/palettes.xml",num_paleta);
 
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii2");
-
     cargarMain();
-
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii3");
 
     cargarVars();
 
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii4");
-
     cargarInputs();
-
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii5");
 
     cargarTriggers();
 
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii6");
-
     cargarSprites();
-
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii7");
 
     cargarHitboxes();
 
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii8");
-
     cargarSfx();
 
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii9");
-
     cargarAnimations();
-
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii10");
 }
 
 void Personaje::logicaBarras()

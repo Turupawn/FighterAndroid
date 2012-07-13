@@ -239,10 +239,12 @@ gAppAlive=1;
 ///*
 	if(!fighter_activo)
 	{
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "11111111111111");
 	    menu->logicaMenu();
 
 	    if(menu->bool_break)
 	    {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "222222222222222");
 		menu->bool_break=false;
 		if(menu->padre==NULL)
 		{
@@ -257,19 +259,24 @@ gAppAlive=1;
 	    }
 	    if(menu->bool_menu_hijo)
 	    {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "33333333333333333");
 		menu->bool_menu_hijo=false;
 		menu=menu->hijo;
 		menu->tecla_arriba=false;
 	    }
 	    if(menu->bool_fighter)
 	    {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "44444444444444444");
 		fighter=menu->fighter;
 		fighter_activo=true;
 	    }
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "555555555555555555");
 	}
 	else
 	{
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "MIAUUUUU11");
 	    fighter->logicaFighter();
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "MIAUUUUU22");
 	    if(fighter->bool_beak)
 	    {
 		menu=fighter->padre;

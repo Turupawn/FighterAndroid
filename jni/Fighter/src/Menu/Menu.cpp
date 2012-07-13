@@ -455,6 +455,7 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU10");
                 {
                     if(char_select->listo())
                     {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "GUMMIIIIIIIIII");
                         printVsScreen(char_select->getLockedPreviewsPA(),char_select->getLockedPreviewsPB());
                         char *path_s=new char[255];
                         strcpy(path_s,"");
@@ -734,40 +735,29 @@ void Menu::logicaMenu()
 {
 if(bool_vs_screen)
 {
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU2");
                         inputa=new Input();
                         inputb=new Input();
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU3");
                         inputa->cargarDesdeXML(1,receiver);
                         inputb->cargarDesdeXML(2,receiver);
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU4");
                         char *path_s=new char[255];
                         strcpy(path_s,"");
                         strcat(path_s,(char*)getStage());
-
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU5");
                         Personaje* p1a=getPersonajeA(0,false);
                         Personaje* p1b=getPersonajeB(0,false);
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU6");
                         p1a->personaje_contrario=p1b;
                         p1b->personaje_contrario=p1a;
-
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU7");
                         pa.clear();
                         pa.push_back(p1a);
 
                         pb.clear();
                         pb.push_back(p1b);
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU8");
                         stage=new Stage(grafico,sonido);
                         stage->cargarDesdeXML((char*)path_s);
                         sonido->pararSonido("Menu.music");
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU9");
                         fighter=new Fighter(sonido,grafico,receiver,pa,pb,stage,this);
                         //delete fighter;
                         //sonido->reproducirSonido(stringw("Menu.music"));
                         bool_fighter=true;
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU10");
 }
 
     dibujarMenu();

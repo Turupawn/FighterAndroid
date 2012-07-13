@@ -42,6 +42,22 @@ void Input::actualizarBuffer(irr::core::map<stringw,stringw>*strings,
     if(resultado=="")
         resultado="5";
 
+//inicio
+resultado="5";
+if(receiver->IsKeyDownn(irr::KEY_DOWN))
+  resultado="2";
+if(receiver->IsKeyDownn(irr::KEY_UP))
+  resultado="8";
+if(receiver->IsKeyDownn(irr::KEY_RIGHT))
+  resultado="6";
+if(receiver->IsKeyDownn(irr::KEY_LEFT))
+  resultado="4";
+if(receiver->IsKeyDownn(irr::KEY_KEY_U))
+  resultado="a";
+if(receiver->IsKeyDownn(irr::KEY_KEY_I))
+  resultado="b";
+//fin
+
     if(stringw(strings->operator[]("orientation"))==stringw("i"))
     {
         for(int i=0;i<(int)resultado.size();i++)
