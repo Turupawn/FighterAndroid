@@ -239,9 +239,7 @@ gAppAlive=1;
 ///*
 	if(!fighter_activo)
 	{
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "11111111111111");
 	    menu->logicaMenu();
-
 	    if(menu->bool_break)
 	    {
 __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "222222222222222");
@@ -270,7 +268,6 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "44444444444444444");
 		fighter=menu->fighter;
 		fighter_activo=true;
 	    }
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "555555555555555555");
 	}
 	else
 	{

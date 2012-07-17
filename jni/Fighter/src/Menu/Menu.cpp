@@ -343,13 +343,19 @@ void Menu::logicaAcciones()
             }
         }else if(receiver->IsKeyDownn(irr::KEY_RETURN))
         {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "BBBBBBBBBBB2222222222");
             if(((MenuContenedor*)contenedor_actual)->getElementoSeleccionado()->getTipo()==4)
             {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "BBBBBBBBBBB333333333333");
                 MenuBoton*mb=((MenuBoton*)((MenuContenedor*)contenedor_actual)->getElementoSeleccionado());
-                if(mb->getAccion()==0)
-                {
+                //if(mb->getAccion()==0)
+                //{
+		if(char_select!=NULL)
+		{
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "BBBBBBBBBBB4444444444444");
                     if(char_select->listo())
                     {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "BBBBBBBBBBB55555555555555");
 bool_vs_screen=true;
                         //printVsScreen(char_select->getLockedPreviewsPA(),char_select->getLockedPreviewsPB());
 
@@ -392,6 +398,23 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU10");
                     }
                 }
 
+                if(mb->getAccion()==2)
+                {
+                    bool_break=true;
+                }
+                if(mb->getAccion()==3)
+                {
+                    exit_signal=true;
+                    bool_break=true;
+                }
+                if(mb->getAccion()==4)
+                {
+                    Menu *temp=new Menu(grafico,receiver,sonido,mb->load_menu,this);
+                    bool_menu_hijo=true;
+                    hijo=temp;
+                }
+
+/*
                 if(mb->getAccion()==1)
                 {
                     if(char_select->listo())
@@ -435,21 +458,6 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "NyU10");
 
                         bool_fighter=true;
                     }
-                }
-                if(mb->getAccion()==2)
-                {
-                    bool_break=true;
-                }
-                if(mb->getAccion()==3)
-                {
-                    exit_signal=true;
-                    bool_break=true;
-                }
-                if(mb->getAccion()==4)
-                {
-                    Menu *temp=new Menu(grafico,receiver,sonido,mb->load_menu,this);
-                    bool_menu_hijo=true;
-                    hijo=temp;
                 }
                 if(mb->getAccion()==5)
                 {
@@ -723,6 +731,7 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "GUMMIIIIIIIIII");
                     //mb->input_config=b.keyToString();
                     llenarInputsBotones();
                 }
+*/
             }
         }else
         {
@@ -733,8 +742,10 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "GUMMIIIIIIIIII");
 
 void Menu::logicaMenu()
 {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "BBBBBBBBBBB1");
 if(bool_vs_screen)
 {
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF1");
                         inputa=new Input();
                         inputb=new Input();
                         inputa->cargarDesdeXML(1,receiver);
@@ -749,15 +760,21 @@ if(bool_vs_screen)
                         pa.clear();
                         pa.push_back(p1a);
 
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF2");
                         pb.clear();
                         pb.push_back(p1b);
                         stage=new Stage(grafico,sonido);
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF3");
                         stage->cargarDesdeXML((char*)path_s);
-                        sonido->pararSonido("Menu.music");
+                        //sonido->pararSonido("Menu.music");
+
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF4");
                         fighter=new Fighter(sonido,grafico,receiver,pa,pb,stage,this);
                         //delete fighter;
                         //sonido->reproducirSonido(stringw("Menu.music"));
                         bool_fighter=true;
+
+__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF5");
 }
 
     dibujarMenu();
