@@ -4,8 +4,8 @@ Grafico::Grafico(Receiver* receiver)
 {
     camera_x=0;
     camera_y=0;
-    ventana_x=320;
-    ventana_y=240;
+    ventana_x=480;//320;
+    ventana_y=320;//240;
     video::E_DRIVER_TYPE driverType;
     driverType = video::EDT_OGLES1;
     //driverType = video::EDT_OPENGL;

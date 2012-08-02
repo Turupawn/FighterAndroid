@@ -119,7 +119,10 @@ bool Receiver::IsKeyDownn(char keycode)
   {
     return true;
   }
-
+  if((keycode==irr::KEY_KEY_I) && b)
+  {
+    return true;
+  }
 
   if (keyState[(int)keycode] == DOWN || keyState[(int)keycode] == PRESSED)
   {

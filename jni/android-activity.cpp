@@ -123,23 +123,43 @@ void Java_com_carloscastro_engine_Game_nativeSendEvent( JNIEnv*  env, jobject de
 /**/
 if(action==0)
 {
-  if(y>100)
-  {
-    if(x<100)
-    {
-      receiver_fighter->up=true;
-    }
 
-    if(x>100)
-    {
-      receiver_fighter->down=true;
-    }
-  }else
-  {
+  if(x>60 && y>215
+       && x<100 && y<245)
+    receiver_fighter->up=true;
+
+  if(x>60 && y>280
+       && x<100 && y<310)
+    receiver_fighter->down=true;
+
+  if(x>30 && y>245
+       && x<65 && y<280)
+    receiver_fighter->left=true;
+
+  if(x>100 && y>245
+       && x<130 && y<280)
+    receiver_fighter->right=true;
+
+  if(x>360 && y>240
+       && x<405 && y<285)
     receiver_fighter->a=true;
-  }
+
+  if(x>405 && y>240
+       && x<450 && y<285)
+    receiver_fighter->b=true;
 }
 
+
+if(action==1)
+{
+  receiver_fighter->up=false;
+  receiver_fighter->down=false;
+  receiver_fighter->left=false;
+  receiver_fighter->right=false;
+
+  receiver_fighter->a=false;
+  receiver_fighter->b=false;
+}
 //menu->logicaCharSelect();
 //menu->logicaAcciones();
 
@@ -242,7 +262,6 @@ gAppAlive=1;
 	    menu->logicaMenu();
 	    if(menu->bool_break)
 	    {
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "222222222222222");
 		menu->bool_break=false;
 		if(menu->padre==NULL)
 		{
@@ -257,23 +276,19 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "222222222222222");
 	    }
 	    if(menu->bool_menu_hijo)
 	    {
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "33333333333333333");
 		menu->bool_menu_hijo=false;
 		menu=menu->hijo;
 		menu->tecla_arriba=false;
 	    }
 	    if(menu->bool_fighter)
 	    {
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "44444444444444444");
 		fighter=menu->fighter;
 		fighter_activo=true;
 	    }
 	}
 	else
 	{
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "MIAUUUUU11");
 	    fighter->logicaFighter();
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "MIAUUUUU22");
 	    if(fighter->bool_beak)
 	    {
 		menu=fighter->padre;

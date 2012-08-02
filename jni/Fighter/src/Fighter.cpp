@@ -340,7 +340,8 @@ void Fighter::logicaPersonaje(Personaje* p)
         p->setString("orientation","d");
     //get input
     stringw str_movimiento="";
-    if(pos_imagen_intro>=(int)match_intro.size())//si ya inicio la pelea
+    if(p->numero==1)//!!! solo si soy personaje 1
+      if(pos_imagen_intro>=(int)match_intro.size())//si ya inicio la pelea
         str_movimiento=p->mapInputToMovimiento();
     if(game_over_a||game_over_b)
         str_movimiento="5";
@@ -596,7 +597,6 @@ void Fighter::logica()
 
 void Fighter::logicaFighter()
 {
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii11");
     //Salir con cualquier boton si ya termino la pelea
     if(game_over_a || game_over_b)
     {
@@ -616,7 +616,6 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii11");
                return;
            }
     }
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii12");
     //receiver->endEventProcess();
     grafico->device->run();
     //cout<<grafico->device->getTimer()->getTime()<<endl;
@@ -639,18 +638,20 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii12");
     //logica
     logica();
 
+/*
 receiver->up=false;
 receiver->down=false;
 receiver->left=false;
 receiver->right=false;
+*/
+if(receiver->a)
+  receiver->a=false;
+if(receiver->b)
+  receiver->b=false;
 
-receiver->a=false;
-receiver->b=false;
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii13");
     //render
     render();
     //receiver->startEventProcess();
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "Chii14");
 
 }
 
@@ -919,6 +920,19 @@ bool Fighter::render()
             grafico->drawText(stringw(pa[pa_actual]->combo+1)+" hits",core::rect<s32>(50,100,0,0),video::SColor (255,255,255,255));
         if(pb[pb_actual]->combo>0)
             grafico->drawText(stringw(pb[pb_actual]->combo+1)+" hits",core::rect<s32>(grafico->ventana_x-124,100,0,0),video::SColor (255,255,255,255));
+
+        irr::video::ITexture* texture_pad=grafico->getTexture("/sdcard/Fighter/misc/pad.png");
+        grafico->draw2DImage
+        (   texture_pad,
+            irr::core::dimension2d<irr::f32> (grafico->ventana_x,grafico->ventana_y),
+            irr::core::rect<irr::f32>(0,0,grafico->ventana_x,grafico->ventana_y),
+            irr::core::position2d<irr::f32>(0,0),
+            irr::core::position2d<irr::f32>(0,0),
+            irr::f32(0), irr::core::vector2df (0,0),
+            true,
+            irr::video::SColor(255,255,255,255),
+            false,
+            false);
 
         grafico->endScene();
     }

@@ -742,17 +742,20 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "GUMMIIIIIIIIII");
 
 void Menu::logicaMenu()
 {
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "BBBBBBBBBBB1");
 if(bool_vs_screen)
 {
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF1");
+                        char *path_s=new char[255];
+                        strcpy(path_s,"");
+                        strcat(path_s,(char*)getStage());
+                        stage=new Stage(grafico,sonido);
+                        stage->cargarDesdeXML((char*)path_s);
+
+
                         inputa=new Input();
                         inputb=new Input();
                         inputa->cargarDesdeXML(1,receiver);
                         inputb->cargarDesdeXML(2,receiver);
-                        char *path_s=new char[255];
-                        strcpy(path_s,"");
-                        strcat(path_s,(char*)getStage());
+
                         Personaje* p1a=getPersonajeA(0,false);
                         Personaje* p1b=getPersonajeB(0,false);
                         p1a->personaje_contrario=p1b;
@@ -760,27 +763,22 @@ __android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF1");
                         pa.clear();
                         pa.push_back(p1a);
 
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF2");
                         pb.clear();
                         pb.push_back(p1b);
-                        stage=new Stage(grafico,sonido);
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF3");
-                        stage->cargarDesdeXML((char*)path_s);
                         //sonido->pararSonido("Menu.music");
 
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF4");
                         fighter=new Fighter(sonido,grafico,receiver,pa,pb,stage,this);
                         //delete fighter;
                         //sonido->reproducirSonido(stringw("Menu.music"));
                         bool_fighter=true;
 
-__android_log_print(ANDROID_LOG_INFO, "Irrlicht", "FFFFFFFFFF5");
 }
 
     dibujarMenu();
     waitSync();
     logicaCharSelect();
     logicaAcciones();
+
 
 receiver->up=false;
 receiver->down=false;
@@ -789,6 +787,8 @@ receiver->right=false;
 
 receiver->a=false;
 receiver->b=false;
+
+
 }
 
 void Menu::loopMenu()
@@ -820,6 +820,20 @@ if(!bool_vs_screen)
 	{
             elementos[i]->dibujar();
 	}
+
+        irr::video::ITexture* texture_pad=grafico->getTexture("/sdcard/Fighter/misc/pad.png");
+        grafico->draw2DImage
+        (   texture_pad,
+            irr::core::dimension2d<irr::f32> (grafico->ventana_x,grafico->ventana_y),
+            irr::core::rect<irr::f32>(0,0,grafico->ventana_x,grafico->ventana_y),
+            irr::core::position2d<irr::f32>(0,0),
+            irr::core::position2d<irr::f32>(0,0),
+            irr::f32(0), irr::core::vector2df (0,0),
+            true,
+            irr::video::SColor(255,255,255,255),
+            false,
+            false);
+
         grafico->endScene();
     }
     grafico->run();
@@ -1117,7 +1131,7 @@ Personaje* Menu::getPersonajeA(int num,bool ia)
 
     //get char
     Personaje* p=new Personaje(grafico,sonido,1,num_paleta);
-    p->cargarDesdeXML(300,0,inputa,(char *)path_a);
+    p->cargarDesdeXML(stage->size/2-grafico->ventana_x/4-200,0,inputa,(char *)path_a);
     return p;
 }
 
@@ -1167,7 +1181,7 @@ Personaje* Menu::getPersonajeB(int num,bool ia)
 
     //get char
     Personaje* p=new Personaje(grafico,sonido,2,num_paleta);
-    p->cargarDesdeXML(524,0,inputb,(char *)path_b);
+    p->cargarDesdeXML(stage->size/2-grafico->ventana_x/4+200,0,inputb,(char *)path_b);
     return p;
 }
 
